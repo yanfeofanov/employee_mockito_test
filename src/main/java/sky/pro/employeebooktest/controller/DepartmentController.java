@@ -33,7 +33,7 @@ public class DepartmentController {
         return departmentService.findAllEmployeesFromDepartment(department);
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/employees/all")
     public Map<Integer, List<Employee>> findEmployee(){
         return departmentService.findEmployeeFromDepartment();
     }
