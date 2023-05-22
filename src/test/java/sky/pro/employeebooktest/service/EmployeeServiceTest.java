@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sky.pro.employeebooktest.exception.ExceptionNotFound;
 import sky.pro.employeebooktest.exception.SuchAnEmployeeAlreadyExists;
-import sky.pro.employeebooktest.models.Employee;
 
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static sky.pro.employeebooktest.constants.EmployeeTestConstants.*;
 
 public class EmployeeServiceTest {

@@ -1,6 +1,7 @@
 package sky.pro.employeebooktest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sky.pro.employeebooktest.models.Employee;
@@ -23,29 +24,29 @@ public class DepartmentController {
     }
 
 
-    @GetMapping("/salary/sum")
-    public int findEmployeeGetDepartment(@PathParam("/id") int department){
-        return departmentService.totalSalaryByDepartment(department);
+    @GetMapping(value = "/{id}/salary/sum")
+    public int findEmployeeGetDepartment(@PathVariable int id){
+        return departmentService.totalSalaryByDepartment(id);
+    }
+
+    @GetMapping(value = "/{id}/employees")
+    public List<Employee> findAllEmployeeFromDepartment(@PathVariable int id){
+        return departmentService.findAllEmployeesFromDepartment(id);
     }
 
     @GetMapping("/employees")
-    public List<Employee> findAllEmployeeFromDepartment(@PathParam("/id") int department){
-        return departmentService.findAllEmployeesFromDepartment(department);
-    }
-
-    @GetMapping("/employees/all")
     public Map<Integer, List<Employee>> findEmployee(){
         return departmentService.findEmployeeFromDepartment();
     }
 
-    @GetMapping("/salary/min")
-    public Employee findMinSalaryFromDepartment(@PathParam("/id") int department){
-        return departmentService.findMinSalaryFromDepartment(department);
+    @GetMapping(value = "/{id}/salary/min")
+    public int findMinSalaryFromDepartment(@PathVariable int id){
+        return departmentService.findMinSalaryFromDepartment(id);
     }
 
-    @GetMapping("/salary/max")
-    public Employee findMaxSalaryFromDepartment(@PathParam("/id") int department){
-        return departmentService.findMaxSalaryFromDepartment(department);
+    @GetMapping(value = "/{id}/salary/max")
+    public int findMaxSalaryFromDepartment(@PathVariable int id){
+        return departmentService.findMaxSalaryFromDepartment(id);
     }
 
 

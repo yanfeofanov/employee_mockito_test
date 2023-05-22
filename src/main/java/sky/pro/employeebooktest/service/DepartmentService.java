@@ -1,6 +1,7 @@
 package sky.pro.employeebooktest.service;
 
 import org.springframework.stereotype.Service;
+import sky.pro.employeebooktest.exception.DepartmentNotFindException;
 import sky.pro.employeebooktest.exception.ExceptionNotFound;
 import sky.pro.employeebooktest.models.Employee;
 
@@ -19,25 +20,27 @@ public class DepartmentService {
     }
 
 
-    public int totalSalaryByDepartment(int department){
+    public int totalSalaryByDepartment(int departmentId){
         return employeeService.getAll().stream()
-                .filter(emp -> emp.getDepartment() == department)
+                .filter(emp -> emp.getDepartment() == departmentId)
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
 
-    public Employee findMaxSalaryFromDepartment(int department) throws ExceptionNotFound {
+    public int findMaxSalaryFromDepartment(int departmentId){
         return employeeService.getAll().stream()
-                .filter(emp -> emp.getDepartment() == department)       // Фильтр по отделам
-                .max(Comparator.comparing(Employee::getSalary)) // Фильтр по максимальному значение getSalary
-                .orElseThrow(() -> new ExceptionNotFound(" Сотрудник с максимальной зарплатой не найден ")); // Выброс исключения
+                .filter(emp -> emp.getDepartment() == departmentId)
+                .mapToInt(Employee::getSalary)
+                .max()
+                .orElseThrow(DepartmentNotFindException::new);
     }
 
-    public Employee findMinSalaryFromDepartment(int department) throws ExceptionNotFound {
+    public int findMinSalaryFromDepartment(int departmentId){
         return employeeService.getAll().stream()
-                .filter(emp -> emp.getDepartment() == department)
-                .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new ExceptionNotFound(" Сотрудник с минимальной зарплатой не найден "));
+                .filter(emp -> emp.getDepartment() == departmentId)
+                .mapToInt((Employee::getSalary))
+                .min()
+                .orElseThrow(DepartmentNotFindException::new);
     }
 
     public Map<Integer, List<Employee>> findEmployeeFromDepartment() {
@@ -45,9 +48,9 @@ public class DepartmentService {
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
-    public List<Employee> findAllEmployeesFromDepartment(int department) {
+    public List<Employee> findAllEmployeesFromDepartment(int departmentId) {
         return employeeService.getAll().stream()
-                .filter(emp -> emp.getDepartment() == department)
-                .toList();
+                .filter(emp -> emp.getDepartment() == departmentId)
+                .collect(Collectors.toList());
     }
 }
